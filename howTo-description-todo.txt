@@ -1,0 +1,10 @@
+
+npx webpack --mode production
+
+npx http-server
+
+yarn add @aslab/graphvizjs
+
+readme.md
+
+myfootsprintmy202212    GRAPHWIZARD

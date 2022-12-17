@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <script src='./dist/graphviz.js'></script>
+    <style>
+        svg {
+            border: 1px solid gray;
+            margin: 10px;
+            margin-top: 0;
+            max-width: calc(100% - 20px);
+        }
+
+        .half {
+            flex: 1 0 100px;
+            overflow: hidden;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .1);
+            padding: .5em;
+            outline: none;
+            resize: none;
+            border: 1px solid green;
+        }
+
+        .box {
+            width: calc(100vw - 20px);
+            height: calc(100vh - 20px);
+            display: flex;
+        }
+    </style>
+</head>
+
+<body style="margin:10px;opacity:0;transition: all 200ms;">
+    <div class="box">
+        <div class="half">
+            <textarea id="dot"></textarea>
+        </div>
+        <div class="half" style="overflow-y:auto;">
+            <div id="chart"></div>
+            <div id="error" style="color:red;"></div>
+            <br>
+            <a href="https://graphviz.org/gallery/" target="_blank" style="margin:10px;">Sample</a>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', async () => {
+            const viz = await graphviz.Viz.create(),
+                dotInput = document.querySelector('#dot'),
+                chart = document.querySelector('#chart'),
+                error = document.querySelector('#error')
+
+            function render() {
+                chart.innerHTML = ''
+                error.innerHTML = ''
+                try {
+                    chart.innerHTML = viz.layout(dotInput.value)
+                    const svg = chart.querySelector('svg')
+                    let width = parseInt(svg.getAttribute('width'))
+                    let height = parseInt(svg.getAttribute('height'))
+                    const maxWidth = chart.clientWidth
+                    if (width > maxWidth) {
+                        height = height * maxWidth / width
+                        width = maxWidth
+                    }
+                    svg.setAttribute('width', width)
+                    svg.setAttribute('height', height)
+                } catch (e) {
+                    error.innerHTML = e
+                }
+            }
+
+            dotInput.addEventListener('input', render)
+            dotInput.innerHTML = `digraph D {  A -> {B, C, D} -> {F} }`
+            render()
+            document.body.style.opacity = 1
+
+
+            const lm = viz.createLayoutManager()
+            lm.addNode(100, 100, 'test1', (x, y) => {
+                console.log(x, y)
+            })
+            lm.addNode(140, 150, 'test2', (x, y) => {
+                console.log(x, y)
+            })
+            lm.addEdge('test1', 'test2')
+
+            const layout = lm.calculate()
+            //chart.innerHTML = layout.svg
+        })
+
+    </script>
+</body>
+
+</html>

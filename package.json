@@ -1,0 +1,35 @@
+{
+  "name": "@aslab/graphvizjs",
+  "version": "1.0.15",
+  "description": "use graphviz in browser",
+  "main": "dist/graphviz.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx webpack --mode production"
+  },
+  "keywords": [],
+  "author": "Alex Shen",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shenAwesome/graphvizjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shenAwesome/graphvizjs/issues"
+  },
+  "homepage": "https://github.com/shenAwesome/graphvizjs#readme",
+  "files": [
+    "./dist/graphviz.js",
+    "./dist/index.d.ts",
+    "./demo.html"
+  ],
+  "dependencies": {
+    "@aslab/graphvizjs": "^1.0.20"
+  }
+}
